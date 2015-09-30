@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="PlayUA.mini.PostPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlayUA.mini"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:MyToolkit.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <ResourceDictionary Source="StyleDictionary.xaml"/>
+    </Page.Resources>
+
+    <Grid Margin="0,0,0,-23">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource PlayUABlueBrush}">
+            <TextBlock Name="PostTitle"
+                       Margin="12,6" FontSize="24" 
+                       Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+                       TextWrapping="WrapWholeWords" 
+                       MaxLines="1" 
+                       TextTrimming="CharacterEllipsis">Завантаження...</TextBlock>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ScrollViewer Padding="12,6">
+                <controls:HtmlView Name="SomeHtmlView" Html="Будь ласка, зачекайте..." FontSize="{Binding CurrentFontSize}" Margin="0,0,0,17"/>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal" Opacity="0.9" Background="{StaticResource PlayUABlueBrush}" Foreground="White">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Відкрити у браузері" Click="OpenInBrowser_Click"></AppBarButton>
+                <AppBarButton Label="Налаштування" Click="SettingsButton_Click"></AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

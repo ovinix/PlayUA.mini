@@ -1,0 +1,123 @@
+﻿<Page
+    x:Class="PlayUA.mini.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlayUA.mini"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:MyToolkit.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary Source="StyleDictionary.xaml"/>
+    </Page.Resources>
+
+    <Grid Margin="0,0,0,-23">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <!--<RowDefinition Height="1"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>-->
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource PlayUABlueBrush}">
+            <TextBlock Margin="12,6" FontSize="29.333" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}">PlayUA</TextBlock>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" 
+                      Name="scrollViewer"
+                      HorizontalScrollMode="Disabled"
+                      Loaded="scrollViewer_Loaded"
+                      SizeChanged="scrollViewer_SizeChanged"
+                      VerticalScrollBarVisibility="Hidden"
+                      ViewChanged="scrollViewer_ViewChanged"
+                      ZoomMode="Disabled">
+            <StackPanel Orientation="Vertical">
+                <Grid Height="60">
+                    <TextBlock Name="textBlock1"
+                               FontSize="22"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Opacity="0"
+                               Text="Pull to refresh..." />
+                    <!--<TextBlock Name="textBlock2"
+                               FontSize="22"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Bottom"
+                               Opacity="0"
+                               Text="pull to..." />-->
+                </Grid>
+                <ListView Name="PostsList" ItemsSource="{Binding Items}" Loaded="ListView_Loaded" Padding="12,6"
+                          Width="{Binding ActualWidth,
+                                          ElementName=scrollViewer,
+                                          Mode=OneWay}"
+                          Height="{Binding ActualHeight,
+                                           ElementName=scrollViewer,
+                                           Mode=OneWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid MinHeight="250">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <!--<RowDefinition Height="Auto"></RowDefinition>-->
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="PlaceholderImage" 
+                                       Source="/Assets/WebsitePlaceholder.jpg" 
+                                       Tapped="PostImage_Tapped" 
+                                       Opacity="0.9"/>
+                                <Image Source="{Binding Thumbnail}"
+                                       Stretch="UniformToFill" 
+                                       ImageOpened="RemoteImage_OnLoaded" 
+                                       Tapped="PostImage_Tapped" 
+                                       Visibility="Collapsed" 
+                                       HorizontalAlignment="Center"
+                                       MinHeight="200"/>
+                                <Grid VerticalAlignment="Bottom">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="Black" Opacity="0.7"></SolidColorBrush>
+                                    </Grid.Background>
+                                    <TextBlock Text="{Binding Title_Plain}" 
+                                               FontSize="20" 
+                                               TextWrapping="WrapWholeWords" 
+                                               Tapped="TextBlock_Tapped" 
+                                               Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+                                               FontFamily="Global User Interface" 
+                                               Margin="6,12"></TextBlock>
+                                    <!--<controls:HtmlView Html="{Binding Title_Plain}"
+                                                       FontSize="20"
+                                                       Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                                       Margin="6,12"
+                                                       Tapped="HtmlView_Tapped"></controls:HtmlView>-->
+                                </Grid>
+                                <controls:HtmlView Grid.Row="1" Html="{Binding Excerpt}" FontSize="16" Opacity="0.8"></controls:HtmlView>
+                                <TextBlock Grid.Row="2"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!--<Grid Grid.Row="2">
+            <ScrollViewer>
+                <RichTextBlock Name="SomeText" FontSize="17" TextWrapping="WrapWholeWords" TextAlignment="Justify"/>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="3">
+            <ScrollViewer>
+                <controls:HtmlView Name="SomeHtmlView" FontSize="17"></controls:HtmlView>
+            </ScrollViewer>
+        </Grid>-->
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal" Opacity="0.9" Background="{StaticResource PlayUABlueBrush}" Foreground="White">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Налаштування" Click="SettingsButton_Click"></AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+</Page>

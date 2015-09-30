@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="PlayUA.mini.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PlayUA.mini"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary Source="StyleDictionary.xaml"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource PlayUABlueBrush}">
+            <TextBlock Name="PostTitle" 
+                       Margin="12,6"
+                       FontSize="24" 
+                       Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+                       TextWrapping="WrapWholeWords" 
+                       MaxLines="1" 
+                       TextTrimming="CharacterEllipsis">Налаштування</TextBlock>
+        </Grid>
+        <StackPanel Grid.Row="1" Margin="12,6">
+            <TextBlock></TextBlock>
+            <TextBlock FontSize="20" Opacity="0.5">Завантаження зображень</TextBlock>
+            <ToggleSwitch Name="ImageLoad" OffContent="Вимкнуто" OnContent="Увімкнуто" Toggled="ImageLoad_Toggled"/>
+            <TextBlock></TextBlock>
+            <TextBlock FontSize="20" Opacity="0.5">Розмір шрифту</TextBlock>
+            <RadioButton Name="MinHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMinimumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Маленький</RadioButton>
+            <RadioButton Name="DefaultHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMediumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Середній</RadioButton>
+            <RadioButton Name="MaxHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMaximumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Великий</RadioButton>
+        </StackPanel>
+    </Grid>
+</Page>
