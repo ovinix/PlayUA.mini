@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -62,14 +63,21 @@ namespace PlayUA.mini
 
             if (!ApplicationData.Current.LocalSettings.Values.ContainsKey("BoolLoadImages"))
             {
-                ApplicationData.Current.LocalSettings.Values.Add("BoolLoadImages", true);
+                ApplicationData.Current.LocalSettings.Values.Add("BoolLoadImages", false);
             }
 
             //Setting controls
             var rb = this.FindName(ApplicationData.Current.LocalSettings.Values["HtmlFontSize"].ToString()) as RadioButton;
             rb.IsChecked = true;
 
-            ImageLoad.IsOn = Boolean.Parse(ApplicationData.Current.LocalSettings.Values["BoolLoadImages"].ToString());
+            tsImageLoad.IsOn = Boolean.Parse(ApplicationData.Current.LocalSettings.Values["BoolLoadImages"].ToString());
+
+            Version version = new Version(Package.Current.Id.Version.Major,
+                Package.Current.Id.Version.Minor,
+                Package.Current.Id.Version.Build,
+                Package.Current.Id.Version.Revision);
+
+            tbPackageVersion.Text = version.ToString();
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)

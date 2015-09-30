@@ -5,7 +5,7 @@
     xmlns:local="using:PlayUA.mini"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:MyToolkit.Controls"
+    xmlns:mytoolkit="using:MyToolkit.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
 
@@ -19,7 +19,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Background="{StaticResource PlayUABlueBrush}">
-            <TextBlock Name="PostTitle"
+            <TextBlock Name="tbPostTitle"
                        Margin="12,6" FontSize="24" 
                        Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                        TextWrapping="WrapWholeWords" 
@@ -27,8 +27,13 @@
                        TextTrimming="CharacterEllipsis">Завантаження...</TextBlock>
         </Grid>
         <Grid Grid.Row="1">
-            <ScrollViewer Padding="12,6">
-                <controls:HtmlView Name="SomeHtmlView" Html="Будь ласка, зачекайте..." FontSize="{Binding CurrentFontSize}" Margin="0,0,0,17"/>
+            <ScrollViewer Padding="12,0">
+                <StackPanel>
+                    <!--Padding not working for HtmlView-->
+                    <TextBlock Height="6"></TextBlock>
+                    <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding CurrentFontSize}"/>
+                    <TextBlock Height="23"></TextBlock>
+                </StackPanel>
             </ScrollViewer>
         </Grid>
     </Grid>

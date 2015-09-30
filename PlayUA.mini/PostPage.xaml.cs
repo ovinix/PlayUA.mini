@@ -32,6 +32,20 @@ namespace PlayUA.mini
     {
         private Post Post;
 
+        private bool bLoadImages
+        {
+            get
+            {
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("BoolLoadImages"))
+                {
+                    return Boolean.Parse(ApplicationData.Current.LocalSettings.Values["BoolLoadImages"].ToString());
+                }
+
+                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+                return Boolean.Parse(loader.GetString("LoadImages"));
+            }
+        }
+
         public double CurrentFontSize
         {
             get
@@ -47,27 +61,9 @@ namespace PlayUA.mini
             }
         }
 
-        public bool bLoadImages
-        {
-            get
-            {
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("BoolLoadImages"))
-                {
-                    return Boolean.Parse(ApplicationData.Current.LocalSettings.Values["BoolLoadImages"].ToString());
-                }
-
-                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-                return Boolean.Parse(loader.GetString("LoadImages"));
-            }
-        }
-
         public PostPage()
         {
             this.InitializeComponent();
-
-            //StatusBar.GetForCurrentView().BackgroundOpacity = 1;
-            //StatusBar.GetForCurrentView().ForegroundColor = Colors.White;
-            //StatusBar.GetForCurrentView().BackgroundColor = ((SolidColorBrush)this.Resources["PlayUABlueBrush"]).Color;
 
             DataContext = this;
         }
@@ -93,7 +89,7 @@ namespace PlayUA.mini
         {
             await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
 
-            PostTitle.Text = post.Title_Plain;
+            tbPostTitle.Text = post.Title_Plain;
 
             String html = post.Content;
 
@@ -112,7 +108,7 @@ namespace PlayUA.mini
             }
             // output = Regex.Replace(output, "\\<div\\>*\\<iframe\\>*\\</button\\>\\</div\\>", "</div>");
 
-            SomeHtmlView.Html = output;
+            hwPostContent.Html = output;
 
             await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
         }
@@ -155,7 +151,7 @@ namespace PlayUA.mini
     //            var json = JsonConvert.DeserializeObject<PostResponse>(ResponseString);
     //            var post = json.Post;
 
-    //            PostTitle.Text = post.Title_Plain;
+    //            tbPostTitle.Text = post.Title_Plain;
 
     //            Debug.WriteLine("Saved:" + post.Title_Plain);
 
@@ -171,12 +167,12 @@ namespace PlayUA.mini
 
     //            Debug.WriteLine("Html:" + post.Content);
 
-    //            SomeHtmlView.Html = output;
+    //            hwPostContent.Html = output;
 
     //        }
     //        catch (Exception e)
     //        {
-    //            SomeHtmlView.Html += "<div>Exceprion 1:" + e.ToString() + "</div>";
+    //            hwPostContent.Html += "<div>Exceprion 1:" + e.ToString() + "</div>";
     //        }
 
     //    }

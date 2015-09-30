@@ -5,7 +5,7 @@
     xmlns:local="using:PlayUA.mini"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:MyToolkit.Controls"
+    xmlns:mytoolkit="using:MyToolkit.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -17,8 +17,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <!--<RowDefinition Height="1"></RowDefinition>
-            <RowDefinition Height="1"></RowDefinition>-->
         </Grid.RowDefinitions>
         <Grid Background="{StaticResource PlayUABlueBrush}">
             <TextBlock Margin="12,6" FontSize="29.333" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}">PlayUA</TextBlock>
@@ -34,7 +32,7 @@
                       ZoomMode="Disabled">
             <StackPanel Orientation="Vertical">
                 <Grid Height="60">
-                    <TextBlock Name="textBlock1"
+                    <TextBlock Name="tbPullToRefresh"
                                FontSize="22"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
@@ -47,7 +45,7 @@
                                Opacity="0"
                                Text="pull to..." />-->
                 </Grid>
-                <ListView Name="PostsList" ItemsSource="{Binding Items}" Loaded="ListView_Loaded" Padding="12,6"
+                <ListView Name="lvPostsList" ItemsSource="{Binding AllPosts}" Loaded="ListView_Loaded" Padding="12,6"
                           Width="{Binding ActualWidth,
                                           ElementName=scrollViewer,
                                           Mode=OneWay}"
@@ -59,7 +57,7 @@
                             <Grid MinHeight="250">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"></RowDefinition>
-                                    <!--<RowDefinition Height="Auto"></RowDefinition>-->
+                                    <RowDefinition Height="Auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
@@ -85,31 +83,19 @@
                                                Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                                                FontFamily="Global User Interface" 
                                                Margin="6,12"></TextBlock>
-                                    <!--<controls:HtmlView Html="{Binding Title_Plain}"
-                                                       FontSize="20"
-                                                       Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                                                       Margin="6,12"
-                                                       Tapped="HtmlView_Tapped"></controls:HtmlView>-->
                                 </Grid>
-                                <controls:HtmlView Grid.Row="1" Html="{Binding Excerpt}" FontSize="16" Opacity="0.8"></controls:HtmlView>
-                                <TextBlock Grid.Row="2"></TextBlock>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                    <TextBlock FontSize="15" Opacity="0.5" Margin="0,0,6,0">Опубліковано:</TextBlock>
+                                    <TextBlock Text="{Binding Date}" FontSize="15" Opacity="0.5"></TextBlock>
+                                </StackPanel>                                
+                                <mytoolkit:HtmlView Grid.Row="2" Html="{Binding Excerpt}" FontSize="16" Opacity="0.8"></mytoolkit:HtmlView>
+                                <TextBlock Grid.Row="3"></TextBlock>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
         </ScrollViewer>
-
-        <!--<Grid Grid.Row="2">
-            <ScrollViewer>
-                <RichTextBlock Name="SomeText" FontSize="17" TextWrapping="WrapWholeWords" TextAlignment="Justify"/>
-            </ScrollViewer>
-        </Grid>
-        <Grid Grid.Row="3">
-            <ScrollViewer>
-                <controls:HtmlView Name="SomeHtmlView" FontSize="17"></controls:HtmlView>
-            </ScrollViewer>
-        </Grid>-->
     </Grid>
 
     <Page.BottomAppBar>

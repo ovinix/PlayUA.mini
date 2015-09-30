@@ -40,7 +40,7 @@ namespace PlayUA.mini
 
         private const int ITEMS_TO_LOAD = 6;
 
-        public ObservableCollection<Post> Items { get; set; }
+        public ObservableCollection<Post> AllPosts { get; set; }
 
         public MainPage()
         {
@@ -52,11 +52,10 @@ namespace PlayUA.mini
             StatusBar.GetForCurrentView().ForegroundColor = Colors.White;
             StatusBar.GetForCurrentView().BackgroundColor = ((SolidColorBrush)this.Resources["PlayUABlueBrush"]).Color;
 
-            Items = new ObservableCollection<Post>();
+            AllPosts = new ObservableCollection<Post>();
 
             DataContext = this;
 
-            //GetAString();
             LoadMoreAsync(REQUEST_URL);
         }
 
@@ -74,23 +73,6 @@ namespace PlayUA.mini
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
-
-            //SomeText.Text = "PlayUA, я вже тут =)";
-
-            //GetAString();
-
-            //string json = @"{
-            //  'Name': 'Bad Boys',
-            //  'ReleaseDate': '1995-4-7T00:00:00',
-            //  'Genres': [
-            //    'Action',
-            //    'Comedy'
-            //  ]
-            //}";
-
-            //var m = JsonConvert.DeserializeObject<Test>(json);
-
-            //SomeText.Text += ("\n" + m.Name);
         }
 
         public async void LoadMoreAsync(String RequestURL)
@@ -111,9 +93,9 @@ namespace PlayUA.mini
 
                 foreach (var post in json.Posts)
                 {
-                    if (!Items.Any(p => p.Url == post.Url))
+                    if (!AllPosts.Any(p => p.Url == post.Url))
                     {
-                        Items.Add(post);
+                        AllPosts.Add(post);
                     }
                 }
             }
@@ -146,9 +128,9 @@ namespace PlayUA.mini
 
                 foreach (var post in json.Posts)
                 {
-                    if (!Items.Any(p => p.Url == post.Url))
+                    if (!AllPosts.Any(p => p.Url == post.Url))
                     {
-                        Items.Insert(0, post);
+                        AllPosts.Insert(0, post);
                     }
                 }
             }
@@ -177,7 +159,7 @@ namespace PlayUA.mini
 
                 var json = JsonConvert.DeserializeObject<PostsResponse>(ResponseString);
 
-                Items.Clear();
+                AllPosts.Clear();
 
                 foreach (var post in json.Posts)
                 {
@@ -190,14 +172,14 @@ namespace PlayUA.mini
 
                     //SomeHtmlView.Html += ("<div>" + post.Title_Plain + "</div>");
 
-                    if (!Items.Contains(post))
+                    if (!AllPosts.Contains(post))
                     {
-                        Items.Add(post);
+                        AllPosts.Add(post);
                     }
 
                 }
 
-                Debug.WriteLine("Items:" + PostsList.Items.Count);
+                Debug.WriteLine("Items:" + lvPostsList.Items.Count);
 
             }
             catch (Exception e)
@@ -267,9 +249,9 @@ namespace PlayUA.mini
 
                     //SomeHtmlView.Html = output;
 
-                    if (!Items.Contains(post))
+                    if (!AllPosts.Contains(post))
                     {
-                        Items.Add(post);
+                        AllPosts.Add(post);
                     }                    
                 }
             }
@@ -288,6 +270,11 @@ namespace PlayUA.mini
             isLoadMore = true;
             await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
 
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
 
         private void PostImage_Tapped(object sender, TappedRoutedEventArgs e)
@@ -328,20 +315,19 @@ namespace PlayUA.mini
 
         private void ListView_Loaded(object sender, RoutedEventArgs e)
         {
-            ScrollViewer viewer = GetScrollViewer(this.PostsList);
+            ScrollViewer viewer = GetScrollViewer(this.lvPostsList);
             viewer.ViewChanged += ListView_ViewChanged;
         }
-
 
         private async void ListView_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var view =sender as ScrollViewer;
             double progress = view.VerticalOffset / view.ScrollableHeight;
             Debug.WriteLine(progress);
-            if (progress > 0.9 && isLoadMore && (Items.Count < 120))
+            if (progress > 0.9 && isLoadMore && (AllPosts.Count < 120))
             {
                 isLoadMore = false;
-                String requestURL = REQUEST_URL + "&count=" + ITEMS_TO_LOAD + "&page=" + ((Items.Count / ITEMS_TO_LOAD) + 1);
+                String requestURL = REQUEST_URL + "&count=" + ITEMS_TO_LOAD + "&page=" + ((AllPosts.Count / ITEMS_TO_LOAD) + 1);
                 LoadMoreAsync(requestURL);
                 //GetAString("http://playua.net/?json=get_recent_posts&count=12&thumbnail_size=n-fulls&page=" + ++CurrentPage);
             }
@@ -358,8 +344,8 @@ namespace PlayUA.mini
 
         private void scrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            PostsList.Width = e.NewSize.Width;
-            PostsList.Height = e.NewSize.Height;
+            lvPostsList.Width = e.NewSize.Width;
+            lvPostsList.Height = e.NewSize.Height;
             scrollViewer.ChangeView(null, 60.0, null);
         }
                 
@@ -370,9 +356,9 @@ namespace PlayUA.mini
             // Text Change
             //textBlock2.Opacity = ScrollViewer.VerticalOffset / 100.0;
             if (ScrollViewer.VerticalOffset == 0.0)
-                textBlock1.Opacity = 0.7;
+                tbPullToRefresh.Opacity = 0.7;
             else
-                textBlock1.Opacity = 0.3;
+                tbPullToRefresh.Opacity = 0.3;
 
             if (ScrollViewer.VerticalOffset != 0.0)
                 _isPullRefresh = true;
@@ -382,22 +368,15 @@ namespace PlayUA.mini
                 if (ScrollViewer.VerticalOffset == 0.0 && _isPullRefresh)
                 {
                     Debug.WriteLine("_isPullRefresh");
-                    //StatusBar.GetForCurrentView().ProgressIndicator.Text = "Оновлення...";
-                    //await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
-                    //GetAString();
-                    //await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
+
                     LoadUpdatesAsync(REQUEST_URL);
                 }
                 _isPullRefresh = false;
                 ScrollViewer.ChangeView(null, 60.0, null);
             }
         }
-        #endregion
+#endregion
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(SettingsPage));
-        }
     }
 
     public class PostsResponse
@@ -407,7 +386,7 @@ namespace PlayUA.mini
 
     public class Post
     {
-        private string _Title_Plain;
+        private String _Title_Plain;
         public String Title_Plain {
             get
             {
@@ -419,55 +398,23 @@ namespace PlayUA.mini
                 this._Title_Plain = value;
             }
         }
+        private String _Date;
+        public String Date
+        {
+            get
+            {
+                return this._Date.Replace("-",".");
+            }
+
+            set
+            {
+                this._Date = value;
+            }
+        }
         public String Excerpt { get; set; }
         public String Content { get; set; }
         public String Url { get; set; }
         public String Slug { get; set; }
         public String Thumbnail { get; set; }
-    }
-
-    public class PaginatedObservableCollection<Object> : ObservableCollection<Object>, ISupportIncrementalLoading
-    {
-        private int LastPost = 1;
-        public bool HasMoreItems
-        {
-            get
-            {
-                if (LastPost >= 100)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
-        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-        {
-            //ProgressBar progressBar = ((Window.Current.Content as Frame).Content as MainPage).ProgressBar;
-
-            CoreDispatcher coreDispatcher = Window.Current.Dispatcher;
-
-            return Task.Run<LoadMoreItemsResult>(async () =>
-            {
-                Debug.WriteLine("LoadMoreItemsAsync");
-                await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                    () =>
-                    {
-                        //progressBar.IsIndeterminate = true;
-                        //progressBar.Visibility = Visibility.Visible;
-                    });
-                LastPost += 10;
-                await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                    () =>
-                    {
-                        //progressBar.Visibility = Visibility.Collapsed;
-                        //progressBar.IsIndeterminate = false;
-                        
-                    });
-
-                return new LoadMoreItemsResult() { Count = count };
-            }).AsAsyncOperation<LoadMoreItemsResult>();
-        }
     }
 }

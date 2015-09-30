@@ -18,8 +18,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Background="{StaticResource PlayUABlueBrush}">
-            <TextBlock Name="PostTitle" 
-                       Margin="12,6"
+            <TextBlock Margin="12,6"
                        FontSize="24" 
                        Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                        TextWrapping="WrapWholeWords" 
@@ -29,12 +28,15 @@
         <StackPanel Grid.Row="1" Margin="12,6">
             <TextBlock></TextBlock>
             <TextBlock FontSize="20" Opacity="0.5">Завантаження зображень</TextBlock>
-            <ToggleSwitch Name="ImageLoad" OffContent="Вимкнуто" OnContent="Увімкнуто" Toggled="ImageLoad_Toggled"/>
+            <ToggleSwitch Name="tsImageLoad" OffContent="Вимкнуто" OnContent="Увімкнуто" Toggled="ImageLoad_Toggled"/>
             <TextBlock></TextBlock>
             <TextBlock FontSize="20" Opacity="0.5">Розмір шрифту</TextBlock>
             <RadioButton Name="MinHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMinimumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Маленький</RadioButton>
             <RadioButton Name="DefaultHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMediumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Середній</RadioButton>
             <RadioButton Name="MaxHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMaximumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Великий</RadioButton>
+            <TextBlock></TextBlock>
+            <TextBlock FontSize="20" Opacity="0.5">Версія додатку</TextBlock>
+            <TextBlock Name="tbPackageVersion" FontSize="21" Margin="0,6"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>
