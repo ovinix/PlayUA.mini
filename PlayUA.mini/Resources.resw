@@ -124,7 +124,7 @@
     <value>false</value>
   </data>
   <data name="MaxHtmlFontSize" xml:space="preserve">
-    <value>21</value>
+    <value>19</value>
   </data>
   <data name="MinHtmlFontSize" xml:space="preserve">
     <value>15</value>

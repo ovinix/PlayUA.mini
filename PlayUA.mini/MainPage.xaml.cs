@@ -35,10 +35,10 @@ namespace PlayUA.mini
     public sealed partial class MainPage : Page
     {
         private const String SITE_URL = "http://playua.net/?json=get_recent_posts&count=12&page=1&thumbnail_size=n-fulls";
-        private const String REQUEST_URL = "http://playua.net/?json=get_recent_posts&thumbnail_size=n-fulls";
+        private const String REQUEST_URL = "http://playua.net/?json=get_recent_posts&thumbnail_size=n-fulls&exclude=comments";
         // private const String SITE_URL = "http://hangglidemiami.com/?json=get_recent_posts";
 
-        private const int ITEMS_TO_LOAD = 6;
+        private const int ITEMS_TO_LOAD = 5;
 
         public ObservableCollection<Post> AllPosts { get; set; }
 
@@ -386,35 +386,56 @@ namespace PlayUA.mini
 
     public class Post
     {
+        public List<Comment> Comments { get; set; }
+        public Author Author { get; set; }
         private String _Title_Plain;
         public String Title_Plain {
-            get
-            {
-                return HtmlUtilities.ConvertToText(this._Title_Plain);
-            }
-
-            set
-            {
-                this._Title_Plain = value;
-            }
+            get { return this._Title_Plain; }
+            set { this._Title_Plain = HtmlUtilities.ConvertToText(value); }
         }
         private String _Date;
         public String Date
         {
-            get
-            {
-                return this._Date.Replace("-",".");
-            }
-
-            set
-            {
-                this._Date = value;
-            }
+            get { return this._Date.Replace("-","."); }
+            set { this._Date = value; }
         }
-        public String Excerpt { get; set; }
+        private String _Excerpt;
+        public String Excerpt {
+            get { return this._Excerpt; }
+            set { this._Excerpt = HtmlUtilities.ConvertToText(value); ; }
+        }
         public String Content { get; set; }
         public String Url { get; set; }
         public String Slug { get; set; }
         public String Thumbnail { get; set; }
+    }
+
+    public class Author
+    {
+        public String Name { get; set; }
+    }
+
+    public class Comment
+    {
+        public String Name { get; set; }
+        private String _Content;
+        public String Content {
+            get { return this._Content; }
+            set { this._Content = HtmlUtilities.ConvertToText(value); ; }
+        }
+        private String _Date;
+        public String Date
+        {
+            get { return this._Date.Replace("-", "."); }
+            set { this._Date = value; }
+        }
+        public String Id { get; set; }
+        public String Parent { get; set; }
+        private Thickness _CommentMargin = new Thickness(0, 6, 0, 6);
+        public Thickness CommentMargin
+        {
+            get { return this._CommentMargin; }
+            set { this._CommentMargin = value; }
+        }
     }
 }

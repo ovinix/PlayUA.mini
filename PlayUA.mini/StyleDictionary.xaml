@@ -6,6 +6,7 @@
 
     <!--Colors-->
     <SolidColorBrush x:Key="PlayUABlueBrush" Color="#18BCFF"/>
+    <SolidColorBrush x:Key="PlayUACommentBrush" Color="#18BCFF" Opacity="0.2"/>
 
     <!--FontSizes-->
     <Style x:Key="RadioMinimumFontSize" TargetType="RadioButton" >
@@ -17,7 +18,42 @@
     </Style>
 
     <Style x:Key="RadioMaximumFontSize" TargetType="RadioButton">
-        <Setter Property="FontSize" Value="21"></Setter>
+        <Setter Property="FontSize" Value="19"></Setter>
+    </Style>
+    
+    <!--PostPivot-->
+    <Style x:Key="PivotStyle" TargetType="Pivot">
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Pivot">
+                    <Grid x:Name="RootElement" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid VerticalAlignment="Center" Background="{StaticResource PlayUABlueBrush}">
+                            <ContentControl x:Name="TitleContentControl" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" Style="{StaticResource PivotTitleContentControlStyle}"/>
+                        </Grid>
+                        <ScrollViewer x:Name="ScrollViewer" HorizontalSnapPointsAlignment="Center" HorizontalSnapPointsType="MandatorySingle" HorizontalScrollBarVisibility="Hidden" Margin="{TemplateBinding Padding}" Grid.Row="1" Template="{StaticResource ScrollViewerScrollBarlessTemplate}" VerticalSnapPointsType="None" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" VerticalContentAlignment="Stretch" ZoomMode="Disabled">
+                            <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">
+                                <PivotHeaderPanel Background="{StaticResource PlayUABlueBrush}" x:Name="Header" >
+                                    <PivotHeaderPanel.RenderTransform>
+                                        <CompositeTransform x:Name="HeaderTranslateTransform" TranslateX="0"/>
+                                    </PivotHeaderPanel.RenderTransform>
+                                </PivotHeaderPanel>
+                                <ItemsPresenter x:Name="PivotItemPresenter">
+                                    <ItemsPresenter.RenderTransform>
+                                        <TranslateTransform x:Name="ItemsPresenterTranslateTransform" X="0"/>
+                                    </ItemsPresenter.RenderTransform>
+                                </ItemsPresenter>
+                            </PivotPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

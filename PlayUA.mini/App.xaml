@@ -5,4 +5,17 @@
     xmlns:local="using:PlayUA.mini"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="PivotHeaderForegroundUnselectedBrush"
+                                     Color="White" Opacity="0.5"/>
+                    <SolidColorBrush x:Key="PivotHeaderForegroundSelectedBrush"
+                                     Color="White"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

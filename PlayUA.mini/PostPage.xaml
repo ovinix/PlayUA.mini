@@ -7,36 +7,75 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mytoolkit="using:MyToolkit.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <ResourceDictionary Source="StyleDictionary.xaml"/>
     </Page.Resources>
 
-    <Grid Margin="0,0,0,-23">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Background="{StaticResource PlayUABlueBrush}">
+    <Pivot Style="{StaticResource PivotStyle}" SelectionChanged="Pivot_SelectionChanged">
+        <!--<Pivot.Title>
             <TextBlock Name="tbPostTitle"
-                       Margin="12,6" FontSize="24" 
+                       Margin="0,-6,0,6" FontSize="24" 
                        Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                        TextWrapping="WrapWholeWords" 
                        MaxLines="1" 
                        TextTrimming="CharacterEllipsis">Завантаження...</TextBlock>
-        </Grid>
-        <Grid Grid.Row="1">
-            <ScrollViewer Padding="12,0">
-                <StackPanel>
-                    <!--Padding not working for HtmlView-->
-                    <TextBlock Height="6"></TextBlock>
-                    <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding CurrentFontSize}"/>
-                    <TextBlock Height="23"></TextBlock>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-    </Grid>
+        </Pivot.Title>-->
+        <PivotItem Margin="0">
+            <PivotItem.Header>
+                <TextBlock FontSize="23" Padding="0,3,0,0">ЧТИВО</TextBlock>
+            </PivotItem.Header>
+            <Grid Margin="0,0,0,-23">
+                <ScrollViewer Padding="12,0">
+                    <StackPanel>
+                        <TextBlock Name="tbPostTitle" 
+                                    FontSize="{Binding TitleFontSize}" 
+                                    FontWeight="Bold" 
+                                    TextWrapping="WrapWholeWords"
+                                    Padding="0,6"></TextBlock>
+                        <TextBlock Name="tbAuthor" 
+                                    FontSize="{Binding PostFontSize}" 
+                                    TextWrapping="WrapWholeWords"
+                                    Opacity="0.5"></TextBlock>
+                        <TextBlock Name="tbDate" 
+                                    FontSize="{Binding PostFontSize}" 
+                                    TextWrapping="WrapWholeWords"
+                                    Padding="0,3,0,12"
+                                    Opacity="0.5"></TextBlock>
+                        <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="17" Loaded="hwPostContent_Loaded"/>
+                        <!--<mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding PostFontSize}" Loaded="hwPostContent_Loaded"/>-->
+                        <!--Padding not working for HtmlView-->
+                        <TextBlock Height="29"></TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </PivotItem>
+        <PivotItem Margin="0">
+            <PivotItem.Header>
+                <TextBlock FontSize="23" Padding="0,3,0,0">КОМЕНТАРІ</TextBlock>
+            </PivotItem.Header>
+            <Grid Margin="0,0,0,-23">
+                <ListView Name="lvComments" ItemsSource="{Binding AllComments}" Padding="12,0,12,23">
+                    <ListView.Header>
+                        <TextBlock FontSize="{Binding PostFontSize}" Opacity="0.5" Padding="0,9" HorizontalAlignment="Center">Коментарі відсутні</TextBlock>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="{Binding CommentMargin}" Background="{StaticResource PlayUACommentBrush}" Width="330">
+                                <TextBlock Text="{Binding Name}" FontSize="17" FontWeight="Bold" Padding="9,6,9,0"></TextBlock>
+                                <TextBlock Text="{Binding Content}" 
+                                           FontSize="17"
+                                           TextWrapping="WrapWholeWords"
+                                           Padding="9,0"></TextBlock>
+                                <TextBlock Text="{Binding Date}" FontSize="15" Opacity="0.5" Padding="9,0,9,6"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </PivotItem>
+    </Pivot>
 
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal" Opacity="0.9" Background="{StaticResource PlayUABlueBrush}" Foreground="White">
