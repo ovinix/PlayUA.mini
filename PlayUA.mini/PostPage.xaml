@@ -13,7 +13,7 @@
         <ResourceDictionary Source="StyleDictionary.xaml"/>
     </Page.Resources>
 
-    <Pivot Style="{StaticResource PivotStyle}" SelectionChanged="Pivot_SelectionChanged">
+    <Pivot Margin="0,0,0,-23" Style="{StaticResource PivotStyle}" SelectionChanged="Pivot_SelectionChanged">
         <!--<Pivot.Title>
             <TextBlock Name="tbPostTitle"
                        Margin="0,-6,0,6" FontSize="24" 
@@ -26,36 +26,33 @@
             <PivotItem.Header>
                 <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold">ЧТИВО</TextBlock>
             </PivotItem.Header>
-            <Grid Margin="0,0,0,-23">
-                <ScrollViewer Padding="12,0">
-                    <StackPanel>
-                        <TextBlock Name="tbPostTitle" 
+            <ScrollViewer Padding="12,0">
+                <StackPanel>
+                    <TextBlock Name="tbPostTitle" 
                                     FontSize="{Binding BigFontSize}" 
                                     FontWeight="Bold" 
                                     TextWrapping="WrapWholeWords"
                                     Padding="0,6"></TextBlock>
-                        <TextBlock Name="tbAuthor" 
+                    <TextBlock Name="tbAuthor" 
                                     FontSize="{Binding PostFontSize}" 
                                     TextWrapping="WrapWholeWords"
                                     Opacity="0.5"></TextBlock>
-                        <TextBlock Name="tbDate" 
+                    <TextBlock Name="tbDate" 
                                     FontSize="{Binding SmallFontSize}" 
                                     TextWrapping="WrapWholeWords"
                                     Padding="0,3,0,12"
                                     Opacity="0.5"></TextBlock>
-                        <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="17" Loaded="hwPostContent_Loaded"/>
-                        <!--<mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding PostFontSize}" Loaded="hwPostContent_Loaded"/>-->
-                        <!--Padding not working for HtmlView-->
-                        <TextBlock Height="29"></TextBlock>
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
+                    <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="17" Loaded="hwPostContent_Loaded"/>
+                    <!--<mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding PostFontSize}" Loaded="hwPostContent_Loaded"/>-->
+                    <!--Padding not working for HtmlView-->
+                    <TextBlock Height="29"></TextBlock>
+                </StackPanel>
+            </ScrollViewer>
         </PivotItem>
         <PivotItem Margin="0">
             <PivotItem.Header>
                 <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold" CharacterSpacing="-15">КОМЕНТАРІ</TextBlock>
             </PivotItem.Header>
-            <Grid Margin="0,0,0,-23">
                 <ListView Name="lvComments" ItemsSource="{Binding AllComments}" Padding="12,0,12,23">
                     <ListView.Header>
                         <TextBlock FontSize="{Binding PostFontSize}" Opacity="0.5" Padding="0,9" HorizontalAlignment="Center">Коментарі відсутні</TextBlock>
@@ -73,7 +70,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </Grid>
         </PivotItem>
     </Pivot>
 
