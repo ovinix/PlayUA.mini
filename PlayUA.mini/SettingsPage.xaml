@@ -28,6 +28,7 @@
         <StackPanel Grid.Row="1" Margin="12,6">
             <TextBlock></TextBlock>
             <TextBlock FontSize="20" Opacity="0.5">Завантаження зображень</TextBlock>
+            <TextBlock FontSize="16.5" TextWrapping="WrapWholeWords">Не рекомендується вмикати на пристроях з малою кількістю оперативної пам'яті. Може призвести до нестабільності в роботі додатку</TextBlock>
             <ToggleSwitch Name="tsImageLoad" OffContent="Вимкнуто" OnContent="Увімкнуто" Toggled="ImageLoad_Toggled"/>
             <TextBlock></TextBlock>
             <TextBlock FontSize="20" Opacity="0.5">Розмір шрифту</TextBlock>
@@ -36,7 +37,7 @@
             <RadioButton Name="MaxHtmlFontSize" GroupName="FontSettings" Style="{StaticResource RadioMaximumFontSize}" VerticalContentAlignment="Center" Checked="RadioButton_Checked">Великий</RadioButton>
             <TextBlock></TextBlock>
             <TextBlock FontSize="20" Opacity="0.5">Версія додатку</TextBlock>
-            <TextBlock Name="tbPackageVersion" FontSize="21" Margin="0,6"></TextBlock>
+            <TextBlock Name="tbPackageVersion" FontSize="20" Margin="0,6"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>

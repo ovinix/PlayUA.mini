@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="4189ShvydkyiVolodymyr.PlayUA.mini" Publisher="CN=E03C543D-0D43-4159-B2DB-0452597D5EB7" Version="1.1.0.3" />
+  <Identity Name="4189ShvydkyiVolodymyr.PlayUA.mini" Publisher="CN=E03C543D-0D43-4159-B2DB-0452597D5EB7" Version="1.1.1.4" />
   <mp:PhoneIdentity PhoneProductId="4b866ba0-b14f-4b96-aa52-c5e520a52880" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>PlayUA.mini</DisplayName>

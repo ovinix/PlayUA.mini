@@ -76,18 +76,17 @@
                                         <SolidColorBrush Color="Black" Opacity="0.7"></SolidColorBrush>
                                     </Grid.Background>
                                     <TextBlock Text="{Binding Title_Plain}" 
-                                               FontSize="20" 
+                                               FontSize="20.5" 
                                                TextWrapping="WrapWholeWords" 
                                                Tapped="TextBlock_Tapped" 
                                                Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
-                                               FontFamily="Global User Interface" 
                                                Margin="6,12"></TextBlock>
                                 </Grid>
                                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                    <TextBlock FontSize="15" Opacity="0.5" Margin="0,0,6,0">Опубліковано:</TextBlock>
-                                    <TextBlock Text="{Binding Date}" FontSize="15" Opacity="0.5"></TextBlock>
+                                    <TextBlock FontSize="15.5" Opacity="0.5" Margin="0,0,6,0">Опубліковано:</TextBlock>
+                                    <TextBlock Text="{Binding Date}" FontSize="15.5" Opacity="0.5"></TextBlock>
                                 </StackPanel>
-                                <TextBlock Grid.Row="2" Text="{Binding Excerpt}" FontSize="16" Opacity="0.6" TextWrapping="WrapWholeWords"></TextBlock>
+                                <TextBlock Grid.Row="2" Text="{Binding Excerpt}" FontSize="16.5" Opacity="0.6" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis" MaxLines="6"></TextBlock>
                                 <!--<mytoolkit:HtmlView Grid.Row="2" Html="{Binding Excerpt}" FontSize="16" Opacity="0.8"></mytoolkit:HtmlView>-->
                                 <TextBlock Grid.Row="3"></TextBlock>
                             </Grid>

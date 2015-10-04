@@ -51,19 +51,9 @@ namespace PlayUA.mini
             }
         }
 
-        public double TitleFontSize
+        public double BigFontSize
         {
-            get
-            {
-                var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
-
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("HtmlFontSize"))
-                {
-                    return Double.Parse(loader.GetString(ApplicationData.Current.LocalSettings.Values["HtmlFontSize"].ToString())) + 4;
-                }
-
-                return Double.Parse(loader.GetString("DefaultHtmlFontSize")) + 4;
-            }
+            get { return PostFontSize + 4; }
         }
 
         public double PostFontSize
@@ -79,6 +69,11 @@ namespace PlayUA.mini
                
                 return Double.Parse(loader.GetString("DefaultHtmlFontSize"));
             }
+        }
+
+        public double SmallFontSize
+        {
+            get { return PostFontSize - 2; }
         }
 
         public PostPage()

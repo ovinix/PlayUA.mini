@@ -10,15 +10,15 @@
 
     <!--FontSizes-->
     <Style x:Key="RadioMinimumFontSize" TargetType="RadioButton" >
-        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="FontSize" Value="15.5"></Setter>
     </Style>
 
     <Style x:Key="RadioMediumFontSize" TargetType="RadioButton">
-        <Setter Property="FontSize" Value="17"></Setter>
+        <Setter Property="FontSize" Value="17.5"></Setter>
     </Style>
 
     <Style x:Key="RadioMaximumFontSize" TargetType="RadioButton">
-        <Setter Property="FontSize" Value="19"></Setter>
+        <Setter Property="FontSize" Value="20.5"></Setter>
     </Style>
     
     <!--PostPivot-->

@@ -24,13 +24,13 @@
         </Pivot.Title>-->
         <PivotItem Margin="0">
             <PivotItem.Header>
-                <TextBlock FontSize="23" Padding="0,3,0,0">ЧТИВО</TextBlock>
+                <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold">ЧТИВО</TextBlock>
             </PivotItem.Header>
             <Grid Margin="0,0,0,-23">
                 <ScrollViewer Padding="12,0">
                     <StackPanel>
                         <TextBlock Name="tbPostTitle" 
-                                    FontSize="{Binding TitleFontSize}" 
+                                    FontSize="{Binding BigFontSize}" 
                                     FontWeight="Bold" 
                                     TextWrapping="WrapWholeWords"
                                     Padding="0,6"></TextBlock>
@@ -39,7 +39,7 @@
                                     TextWrapping="WrapWholeWords"
                                     Opacity="0.5"></TextBlock>
                         <TextBlock Name="tbDate" 
-                                    FontSize="{Binding PostFontSize}" 
+                                    FontSize="{Binding SmallFontSize}" 
                                     TextWrapping="WrapWholeWords"
                                     Padding="0,3,0,12"
                                     Opacity="0.5"></TextBlock>
@@ -53,7 +53,7 @@
         </PivotItem>
         <PivotItem Margin="0">
             <PivotItem.Header>
-                <TextBlock FontSize="23" Padding="0,3,0,0">КОМЕНТАРІ</TextBlock>
+                <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold" CharacterSpacing="-15">КОМЕНТАРІ</TextBlock>
             </PivotItem.Header>
             <Grid Margin="0,0,0,-23">
                 <ListView Name="lvComments" ItemsSource="{Binding AllComments}" Padding="12,0,12,23">
@@ -62,13 +62,13 @@
                     </ListView.Header>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="{Binding CommentMargin}" Background="{StaticResource PlayUACommentBrush}" Width="330">
-                                <TextBlock Text="{Binding Name}" FontSize="17" FontWeight="Bold" Padding="9,6,9,0"></TextBlock>
+                            <StackPanel Margin="{Binding CommentMargin}" Background="{StaticResource PlayUACommentBrush}" MinWidth="330">
+                                <TextBlock Text="{Binding Name}" FontSize="{Binding ElementName=lvComments, Path=DataContext.PostFontSize}" FontWeight="Bold" Padding="9,6,9,0"></TextBlock>
                                 <TextBlock Text="{Binding Content}" 
-                                           FontSize="17"
-                                           TextWrapping="WrapWholeWords"
-                                           Padding="9,0"></TextBlock>
-                                <TextBlock Text="{Binding Date}" FontSize="15" Opacity="0.5" Padding="9,0,9,6"></TextBlock>
+                                        FontSize="{Binding ElementName=lvComments, Path=DataContext.PostFontSize}"
+                                        TextWrapping="WrapWholeWords"
+                                        Padding="9,0"></TextBlock>
+                                <TextBlock Text="{Binding Date}" FontSize="{Binding ElementName=lvComments, Path=DataContext.SmallFontSize}" Opacity="0.5" Padding="9,0,9,6"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
