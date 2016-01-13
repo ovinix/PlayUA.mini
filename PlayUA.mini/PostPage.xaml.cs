@@ -22,6 +22,7 @@ using Windows.UI;
 using Windows.Storage;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -30,7 +31,7 @@ namespace PlayUA.mini
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PostPage : Page
+    public sealed partial class PostPage : Page, INotifyPropertyChanged
     {
         private const String COMMENTS_REQUEST_URL = "http://playua.net/?json=get_post&include=comments";
         private Post Post;
@@ -81,8 +82,9 @@ namespace PlayUA.mini
             this.InitializeComponent();
 
             AllComments = new ObservableCollection<Comment>();
+            //PostParagraphs = new ObservableCollection<String>();
 
-            hwPostContent.FontSize = PostFontSize;
+            //hwPostContent.FontSize = PostFontSize;
 
             DataContext = this;
         }
@@ -104,14 +106,62 @@ namespace PlayUA.mini
             HardwareButtons.BackPressed -= HardwareButtons_BackPressed;
         }
 
+        //public ObservableCollection<String> PostParagraphs { get; set; }
+        //MyToolkit.Controls.HtmlView hwPostContent = new MyToolkit.Controls.HtmlView();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private String _PostTitle;
+        public String PostTitle
+        {
+            get { return _PostTitle; }
+            set
+            {
+                _PostTitle = value;
+                NotifyPropertyChanged("PostTitle");
+            }
+        }
+        private String _PostAuthor;
+        public String PostAuthor
+        {
+            get { return _PostAuthor; }
+            set
+            {
+                _PostAuthor = value;
+                NotifyPropertyChanged("PostAuthor");
+            }
+        }
+        private String _PostDate;
+        public String PostDate
+        {
+            get { return _PostDate; }
+            set
+            {
+                _PostDate = value;
+                NotifyPropertyChanged("PostDate");
+            }
+        }
+
         public async void ShowPost(Post post)
         {
             StatusBar.GetForCurrentView().ProgressIndicator.Text = "";
             await StatusBar.GetForCurrentView().ProgressIndicator.ShowAsync();
 
-            tbPostTitle.Text = post.Title_Plain;
-            tbAuthor.Text = "Автор " + post.Author.Name;
-            tbDate.Text = post.Date;
+            hwPostContent.FontSize = PostFontSize;
+
+            PostTitle = post.Title_Plain;
+            PostAuthor = "Автор " + post.Author.Name;
+            PostDate = post.Date;
 
             String html = post.Content;
 
@@ -124,8 +174,12 @@ namespace PlayUA.mini
             output = Regex.Replace(output, "/></a>", "/>");
             //Removing img width and height (HtmlView improvement for poor connection)
             //output = Regex.Replace(output, "\\width=\"[0-9]*\\\"", " ");
-            output = Regex.Replace(output,"height=\"[0-9]*\\\"", "");
+            output = Regex.Replace(output, "height=\"[0-9]*\\\"", "");
             output = Regex.Replace(output, "width=\"[0-9]*\\\"", "");
+
+            // <ol> tag not showing in MyToolkit
+            output = output.Replace("<ol>", "<ul>");
+            output = output.Replace("</ol>", "</ul>");
 
             // Repearing <strong> tag
             output = output.Replace("<strong>\u00a0", " <strong>");
@@ -143,6 +197,56 @@ namespace PlayUA.mini
             // output = Regex.Replace(output, "\\<div\\>*\\<iframe\\>*\\</button\\>\\</div\\>", "</div>");
 
             hwPostContent.Html = output;
+
+            //foreach (var prop in hwPostContent.ScrollViewer.GetType().GetRuntimeProperties())
+            //{
+            //    Debug.WriteLine("{0}={1}", prop.Name, prop.GetValue(hwPostContent.ScrollViewer, null));
+            //}
+
+            ///********* LET IT BEGIN *************/
+
+            ////List<String> groupCollection = new List<String>();
+
+            //////System.Text.RegularExpressions.Match m = System.Text.RegularExpressions.Regex.Match(output, @"<(p|div)>\s*(.+?)\s*</(p|div)>");
+            //////System.Text.RegularExpressions.Match m = System.Text.RegularExpressions.Regex.Match(output, @"<.*[^>]>\s*(.+?)\s*</.*[^>]>");
+            ////System.Text.RegularExpressions.Match m = System.Text.RegularExpressions.Regex.Match(output, @"<(p|div|h[0-9])>.*?</(p|div||h[0-9])>");
+
+            ////while (m.Success)
+            ////{
+            ////    groupCollection.Add(m.Value);
+            ////    m = m.NextMatch();
+            ////}
+            ////ObservableCollection<String> paragraphs = new ObservableCollection<String>();
+            ////if (groupCollection.Count > 0)
+            ////{
+            ////    foreach (object item in groupCollection)
+            ////    {
+            ////        paragraphs.Add(item.ToString());
+            ////    }
+            ////}
+
+            ////string[] stringSeparators = new string[] { "</p>" };
+            //string[] stringSeparators = new string[] { "<img" };
+            //var s = output.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+            //List<String> list = new List<String>(s);
+
+            //bool first = false;
+            //foreach (var pa in list)
+            //{
+            //    String paragraph = pa.Replace("\n", "");
+            //    if (!String.IsNullOrEmpty(paragraph.Replace("<p>", "")))
+            //    {
+            //        //paragraph = /*"&nbsp;\n" + */paragraph + "</p>";
+            //        if (first)
+            //        {
+            //            paragraph = "<img " + paragraph;
+            //        }                    
+            //        PostParagraphs.Add(paragraph);
+            //    }
+            //    first = true;
+            //}
+
+            ///******** END ******************/
 
             await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
         }

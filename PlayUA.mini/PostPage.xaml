@@ -1,17 +1,26 @@
 ﻿<Page
-    x:Class="PlayUA.mini.PostPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PlayUA.mini"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mytoolkit="using:MyToolkit.Controls"
+    x:Class="PlayUA.mini.PostPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <ResourceDictionary Source="StyleDictionary.xaml"/>
     </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal" Opacity="0.9" Background="{StaticResource PlayUABlueBrush}" Foreground="White">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Відкрити у браузері" Click="OpenInBrowser_Click"/>
+                <AppBarButton Label="Налаштування" Click="SettingsButton_Click"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Pivot Margin="0,0,0,-23" Style="{StaticResource PivotStyle}" SelectionChanged="Pivot_SelectionChanged">
         <!--<Pivot.Title>
@@ -24,61 +33,103 @@
         </Pivot.Title>-->
         <PivotItem Margin="0">
             <PivotItem.Header>
-                <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold">ЧТИВО</TextBlock>
+                <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold">
+					<Run Text="ЧТИВО"/>
+                </TextBlock>
             </PivotItem.Header>
-            <ScrollViewer Padding="12,0">
-                <StackPanel>
+            <!--<ScrollViewer Padding="12,0">-->
+            <!--<StackPanel>
                     <TextBlock Name="tbPostTitle" 
-                                    FontSize="{Binding BigFontSize}" 
-                                    FontWeight="Bold" 
-                                    TextWrapping="WrapWholeWords"
-                                    Padding="0,6"></TextBlock>
+                                FontSize="{Binding BigFontSize}" 
+                                FontWeight="Bold" 
+                                TextWrapping="WrapWholeWords"
+                                Padding="0,6"></TextBlock>
                     <TextBlock Name="tbAuthor" 
-                                    FontSize="{Binding PostFontSize}" 
-                                    TextWrapping="WrapWholeWords"
-                                    Opacity="0.5"></TextBlock>
+                                FontSize="{Binding PostFontSize}" 
+                                TextWrapping="WrapWholeWords"
+                                Opacity="0.5"></TextBlock>
                     <TextBlock Name="tbDate" 
-                                    FontSize="{Binding SmallFontSize}" 
-                                    TextWrapping="WrapWholeWords"
-                                    Padding="0,3,0,12"
-                                    Opacity="0.5"></TextBlock>
-                    <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="17" Loaded="hwPostContent_Loaded"/>
-                    <!--<mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding PostFontSize}" Loaded="hwPostContent_Loaded"/>-->
-                    <!--Padding not working for HtmlView-->
-                    <TextBlock Height="29"></TextBlock>
-                </StackPanel>
-            </ScrollViewer>
+                                FontSize="{Binding SmallFontSize}" 
+                                TextWrapping="WrapWholeWords"
+                                Padding="0,3,0,12"
+                                Opacity="0.5"></TextBlock>-->
+            <mytoolkit:ScrollableHtmlView x:Name="hwPostContent" ShowHeader="True" Html="Будь ласка, зачекайте..." FontSize="{Binding PostFontSize}" Loaded="hwPostContent_Loaded" InnerMargin="12,0,12,29" InnerMaxWidth="360">
+                <mytoolkit:ScrollableHtmlView.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Name="tbPostTitle" 
+								FontSize="{Binding BigFontSize}" 
+								FontWeight="Bold" 
+								TextWrapping="WrapWholeWords"
+								Padding="0,6"
+								Text="{Binding PostTitle}"/>
+                            <TextBlock Name="tbAuthor" 
+								FontSize="{Binding PostFontSize}" 
+								TextWrapping="WrapWholeWords"
+								Opacity="0.5"
+								Text="{Binding PostAuthor}"/>
+                            <TextBlock Name="tbDate" 
+								FontSize="{Binding SmallFontSize}" 
+								TextWrapping="WrapWholeWords"
+								Padding="0,3,0,12"
+								Opacity="0.5"
+								Text="{Binding PostDate}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </mytoolkit:ScrollableHtmlView.HeaderTemplate>
+            </mytoolkit:ScrollableHtmlView>
+            <!--<mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="17" Loaded="hwPostContent_Loaded"/>
+                    <mytoolkit:HtmlView Name="hwPostContent" Html="Будь ласка, зачекайте..." FontSize="{Binding PostFontSize}" Loaded="hwPostContent_Loaded"/>
+                    Padding not working for HtmlView-->
+            <!--<ListView Name="lvPost" ItemsSource="{Binding PostParagraphs}" Loaded="hwPostContent_Loaded">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <mytoolkit:HtmlView Html="{Binding}" FontSize="{Binding ElementName=lvPost, Path=DataContext.PostFontSize}" Margin="0,12,0,0" ParagraphMargin="6"/>
+                                    <TextBlock Grid.Column="1" FontFamily="Global User Interface"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>-->
+            <!--<TextBlock Height="29"></TextBlock>-->
+            <!--</StackPanel>-->
+            <!--</ScrollViewer>-->
         </PivotItem>
         <PivotItem Margin="0">
             <PivotItem.Header>
-                <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold" CharacterSpacing="-15">КОМЕНТАРІ</TextBlock>
+                <TextBlock FontSize="20.5" Padding="0,3,0,0" FontFamily="Segoe WP Black" FontWeight="Bold" CharacterSpacing="-15">
+					<Run Text="КОМЕНТАРІ"/>
+                </TextBlock>
             </PivotItem.Header>
-                <ListView Name="lvComments" ItemsSource="{Binding AllComments}" Padding="12,0,12,23">
-                    <ListView.Header>
-                        <TextBlock FontSize="{Binding PostFontSize}" Opacity="0.5" Padding="0,9" HorizontalAlignment="Center">Коментарі відсутні</TextBlock>
-                    </ListView.Header>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="{Binding CommentMargin}" Background="{StaticResource PlayUACommentBrush}" MinWidth="330">
-                                <TextBlock Text="{Binding Name}" FontSize="{Binding ElementName=lvComments, Path=DataContext.PostFontSize}" FontWeight="Bold" Padding="9,6,9,0"></TextBlock>
-                                <TextBlock Text="{Binding Content}" 
-                                        FontSize="{Binding ElementName=lvComments, Path=DataContext.PostFontSize}"
-                                        TextWrapping="WrapWholeWords"
-                                        Padding="9,0"></TextBlock>
-                                <TextBlock Text="{Binding Date}" FontSize="{Binding ElementName=lvComments, Path=DataContext.SmallFontSize}" Opacity="0.5" Padding="9,0,9,6"></TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+            <ListView x:Name="lvComments" ItemsSource="{Binding AllComments}" Padding="12,0,12,23">
+                <ListView.Header>
+                    <TextBlock FontSize="{Binding PostFontSize}" Opacity="0.5" Padding="0,9" HorizontalAlignment="Center">
+						<Run Text="Коментарі відсутні"/>
+                    </TextBlock>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="{Binding CommentMargin}" Background="{StaticResource PlayUACommentBrush}" MinWidth="330">
+                            <TextBlock Text="{Binding Name}" FontSize="{Binding DataContext.PostFontSize, ElementName=lvComments}" FontWeight="Bold" Padding="9,6,9,0"/>
+                            <TextBlock Text="{Binding Content}" 
+								FontSize="{Binding DataContext.PostFontSize, ElementName=lvComments}"
+								TextWrapping="WrapWholeWords"
+								Padding="9,0"/>
+                            <TextBlock Text="{Binding Date}" FontSize="{Binding DataContext.SmallFontSize, ElementName=lvComments}" Opacity="0.5" Padding="9,0,9,6"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </PivotItem>
     </Pivot>
 
-    <Page.BottomAppBar>
-        <CommandBar ClosedDisplayMode="Minimal" Opacity="0.9" Background="{StaticResource PlayUABlueBrush}" Foreground="White">
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Відкрити у браузері" Click="OpenInBrowser_Click"></AppBarButton>
-                <AppBarButton Label="Налаштування" Click="SettingsButton_Click"></AppBarButton>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
-    </Page.BottomAppBar>
 </Page>
